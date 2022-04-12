@@ -1,9 +1,13 @@
 import './assets/styles/custom.scss';
+import Navbar from './components/Navbar';
 import './App.css';
 
 function App() {
   return (
-    <h1>Hello JMCatalog</h1>
+    <>
+      <Navbar />
+      <h1>Hello JMCatalog</h1>
+    </>
   );
 }
 
