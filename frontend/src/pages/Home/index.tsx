@@ -1,13 +1,12 @@
+import { Link } from 'react-router-dom';
 import { ReactComponent as MainImage } from '../../assets/images/main-img.svg';
 import ButtonIcon from '../../components/ButtonIcon';
-import Navbar from '../../components/Navbar';
 import './style.css';
 //import '../../App.css';
 
 const Home = () => {
   return (
     <>
-      <Navbar />
       <div className="home-container">
         <div className="base-card home-card">
           <div className="home-content-container">
@@ -18,7 +17,9 @@ const Home = () => {
                 mercado.
               </p>
             </div>
-            <ButtonIcon />
+            <Link to="/products">
+              <ButtonIcon />
+            </Link>
           </div>
           <div className="home-img-container">
             <MainImage />
