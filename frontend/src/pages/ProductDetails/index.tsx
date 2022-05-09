@@ -1,13 +1,14 @@
-import './style.css';
-import { ReactComponent as ArrowImg } from 'assets/images/arrow.svg';
-import ProductPrice from 'components/ProductPrice';
-import { Link, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { Product } from 'types/product';
+import { ReactComponent as ArrowIcon } from 'assets/images/arrow.svg';
 import axios from 'axios';
+import ProductPrice from 'components/ProductPrice';
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { Product } from 'types/product';
 import { BASE_URL } from 'util/requests';
 import ProductInfoLoader from './ProductInfoLoader';
-import ProductDetailLoader from './ProductDetailLoader';
+import ProductDetailsLoader from './ProductDetailsLoader';
+
+import './styles.css';
 
 type UrlParams = {
   productId: string;
@@ -15,6 +16,7 @@ type UrlParams = {
 
 const ProductDetails = () => {
   const { productId } = useParams<UrlParams>();
+
   const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState<Product>();
 
@@ -35,7 +37,7 @@ const ProductDetails = () => {
       <div className="base-card product-details-card">
         <Link to="/products">
           <div className="goback-container">
-            <ArrowImg />
+            <ArrowIcon />
             <h2>VOLTAR</h2>
           </div>
         </Link>
@@ -57,7 +59,7 @@ const ProductDetails = () => {
           </div>
           <div className="col-xl-6">
             {isLoading ? (
-              <ProductDetailLoader />
+              <ProductDetailsLoader />
             ) : (
               <div className="description-container">
                 <h2>Descrição do produto</h2>

@@ -1,19 +1,26 @@
-import { Outlet } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import Navbar from './Navbar';
 
-//import Navbar from './Navbar';
-
-import './style.css';
+import './styles.css';
 
 const Admin = () => {
   return (
-    /*<div className="admin-container">
+    <div className="admin-container">
       <Navbar />
       <div className="admin-content">
-        <Outlet />
+        <Switch>
+          <Route path="/admin/products">
+            <h1>Product CRUD</h1>
+          </Route>
+          <Route path="/admin/categories">
+            <h1>Category CRUD</h1>
+          </Route>
+          <Route path="/admin/users">
+            <h1>User CRUD</h1>
+          </Route>
+        </Switch>
       </div>
-    </div> */
-
-    <Outlet />
+    </div>
   );
 };
 

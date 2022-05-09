@@ -3,13 +3,13 @@
 }
 
 .product-price-container span {
-    color: #9E9E9E;
     font-size: 18px;
-    margin-top: 5px;
+    color: #9E9E9E;
+    margin-top: 4px;
 }
 
 .product-price-container h3 {
-    color: #407BFF;
     font-size: 32px;
+    color: #407BFF;
     margin-left: 10px;
 }

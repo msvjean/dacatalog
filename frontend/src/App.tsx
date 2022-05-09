@@ -1,12 +1,11 @@
-import './assets/styles/custom.scss';
+import 'assets/styles/custom.scss';
 import './App.css';
-import Caminho from 'Routes';
+
+import Routes from 'Routes';
 
 function App() {
   return (
-    <>
-      <Caminho />
-    </>
+    <Routes />
   );
 }
 
