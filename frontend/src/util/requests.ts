@@ -8,6 +8,17 @@ const CLIENT_ID = process.env.REACT_APP_CLIENT_ID ?? 'dscatalog';
 
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET ?? 'dscatalog123';
 
+const tokenKey = 'authData';
+
+type LoginResponse = {
+    access_token: string;
+    token_type: string;
+    expires_in: number,
+    scope: string;
+    userFirstName: string;
+    userId: number;
+}
+
 type LoginData = {
   username: string;
   password: string;
@@ -32,3 +43,12 @@ export const requestBackendLogin = (loginData: LoginData) => {
     headers,
   });
 };
+
+export const saveAuthData = (obj : LoginData) => {
+    localStorage.setItem(tokenKey, JSON.stringify(obj));
+}
+
+export const getAuthData = () => {
+    const str = localStorage.getItem(tokenKey) ?? "{}";
+    return JSON.parse(str) as LoginResponse;
+}
