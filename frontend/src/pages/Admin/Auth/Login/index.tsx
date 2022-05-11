@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import ButtonIcon from 'components/ButtonIcon';
 import { useForm } from 'react-hook-form';
 import { getAuthData, requestBackendLogin, saveAuthData } from 'util/requests';
@@ -12,6 +12,7 @@ type FormData = {
 };
 
 const Login = () => {
+  const history = useHistory();
   const [hasError, setHasError] = useState(false);
   const {
     register,
@@ -27,6 +28,7 @@ const Login = () => {
         console.log('TOKEN GERADO: ' + token);
         setHasError(false);
         console.log('SUCESSO', response);
+        history.push('/admin');
       })
       .catch((error) => {
         setHasError(true);
