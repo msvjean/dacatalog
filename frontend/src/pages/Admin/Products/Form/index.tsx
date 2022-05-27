@@ -1,22 +1,27 @@
 import { AxiosRequestConfig } from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import { Product } from 'types/product';
 import { requestBackend } from 'util/requests';
+import Select from 'react-select';
 
 import './styles.css';
+import { Category } from 'types/category';
 
 type UrlParams = {
   productId: string;
 };
 
 const Form = () => {
+
   const { productId } = useParams<UrlParams>();
 
   const isEditing = productId !== 'create';
 
   const history = useHistory();
+
+  const [selectCategories, setSelectCategories] = useState<Category[]>([]);
 
   const {
     register,
@@ -24,6 +29,13 @@ const Form = () => {
     formState: { errors },
     setValue,
   } = useForm<Product>();
+
+  useEffect(() => {
+    requestBackend({url: '/categories'})
+    .then(response => {
+      setSelectCategories(response.data.content);
+    })
+  }, [])
 
   useEffect(() => {
     if (isEditing) {
@@ -84,6 +96,16 @@ const Form = () => {
                 <div className="invalid-feedback d-block">
                   {errors.name?.message}
                 </div>
+              </div>
+              <div className="margin-botton-30">
+                <Select
+                  options={selectCategories}
+                  isMulti
+                  classNamePrefix="product-crud-select"
+                  placeholder="Categorias"
+                  getOptionLabel={(category) => category.name}
+                  getOptionValue={(category) => String(category.id)}
+                />
               </div>
               <div className="margin-botton-30">
                 <input
