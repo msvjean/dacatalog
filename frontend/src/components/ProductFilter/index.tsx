@@ -7,19 +7,40 @@ import { requestBackend } from 'util/requests';
 
 import './styles.css';
 
-type ProductFilterData = {
+export type ProductFilterData = {
   name: string;
-  category: Category;
+  category: Category | null;
 };
 
-const ProductFilter = () => {
-  const { register, handleSubmit, control } = useForm<ProductFilterData>();
+type Props = {
+    onSubmitFilter: (data: ProductFilterData) => void;
+}
+
+const ProductFilter = ({onSubmitFilter} : Props) => {
+  const { register, handleSubmit, control, setValue, getValues } =
+    useForm<ProductFilterData>();
 
   const [selectCategories, setSelectCategories] = useState<Category[]>([]);
 
   const onSubmit = (formData: ProductFilterData) => {
-      console.log('ENVIOU', formData);
+    onSubmitFilter(formData);
   };
+
+  const handleFormClear = () => {
+    setValue('name', '');
+    setValue('category', null);
+  };
+
+  const handleChangeCategory = (value: Category) => {
+    setValue('category', value);
+
+    const obj : ProductFilterData = {
+        name: getValues('name'),
+        category: getValues('category')
+    }
+
+    onSubmitFilter(obj);
+  }
 
   useEffect(() => {
     requestBackend({ url: '/categories' }).then((response) => {
@@ -56,11 +77,17 @@ const ProductFilter = () => {
                   placeholder="Categoria"
                   getOptionLabel={(category) => category.name}
                   getOptionValue={(category) => String(category.id)}
+                  onChange={value => handleChangeCategory(value as Category)}
                 />
               )}
             />
           </div>
-          <button className="btn btn-outline-secondary btn-product-filter-clear">LIMPAR <span className="btn-product-filter-word">FILTRO</span></button>
+          <button
+            className="btn btn-outline-secondary btn-product-filter-clear"
+            onClick={handleFormClear}
+          >
+            LIMPAR <span className="btn-product-filter-word">FILTRO</span>
+          </button>
         </div>
       </form>
     </div>

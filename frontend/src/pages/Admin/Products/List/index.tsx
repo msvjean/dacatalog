@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import Pagination from 'components/Pagination';
-import ProductFilter from 'components/ProductFilter';
+import ProductFilter, { ProductFilterData } from 'components/ProductFilter';
 import ProductCrucCard from 'pages/Admin/Products/ProductCrudCard';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -12,6 +12,7 @@ import './styles.css';
 
 type ControlComponentData = {
   activePage: number;
+  filterData: ProductFilterData;
 };
 
 const List = () => {
@@ -20,29 +21,39 @@ const List = () => {
   const [controlComponentData, setControlComponentData] =
     useState<ControlComponentData>({
       activePage: 0,
+      filterData: { name: '', category: null },
     });
 
-    const getProducts = useCallback(() => {
-      const config: AxiosRequestConfig = {
-        method: 'GET',
-        url: '/products',
-        params: {
-          page: controlComponentData.activePage,
-          size: 3,
-        },
-      };
-  
-      requestBackend(config).then((response) => {
-        setPage(response.data);
-      });
-       } , [controlComponentData])
+  const getProducts = useCallback(() => {
+    const config: AxiosRequestConfig = {
+      method: 'GET',
+      url: '/products',
+      params: {
+        page: controlComponentData.activePage,
+        size: 3,
+        name: controlComponentData.filterData.name,
+        categoryId: controlComponentData.filterData.category?.id,
+      },
+    };
+
+    requestBackend(config).then((response) => {
+      setPage(response.data);
+    });
+  }, [controlComponentData]);
 
   useEffect(() => {
     getProducts();
   }, [getProducts]);
 
   const handlePageChange = (pageNumber: number) => {
-    setControlComponentData({ activePage: pageNumber });
+    setControlComponentData({
+      activePage: pageNumber,
+      filterData: controlComponentData.filterData,
+    });
+  };
+
+  const handleSubmitFilter = (data: ProductFilterData) => {
+    setControlComponentData({ activePage: 0, filterData: data });
   };
 
   return (
@@ -53,7 +64,7 @@ const List = () => {
             ADICIONAR
           </button>
         </Link>
-        <ProductFilter />
+        <ProductFilter onSubmitFilter={handleSubmitFilter} />
       </div>
       <div className="row">
         {page?.content.map((product) => (
@@ -63,6 +74,7 @@ const List = () => {
         ))}
       </div>
       <Pagination
+        forcePage={page?.number}
         pageCount={page ? page.totalPages : 0}
         range={3}
         onChange={handlePageChange}
