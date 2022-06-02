@@ -6,6 +6,7 @@ import CategoryBadge from '../CategoryBadge';
 import { Link } from 'react-router-dom';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
+import { toast } from 'react-toastify';
 
 type Props = {
   product: Product;
@@ -25,6 +26,7 @@ const ProductCrucCard = ({ product, onDelete }: Props) => {
     };
 
     requestBackend(config).then(() => {
+      toast.info('Excluído com sucesso');
       onDelete();
     });
   };

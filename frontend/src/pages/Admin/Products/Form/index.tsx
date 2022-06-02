@@ -5,6 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Product } from 'types/product';
 import { requestBackend } from 'util/requests';
 import Select from 'react-select';
+import { toast } from 'react-toastify';
 
 import './styles.css';
 import { Category } from 'types/category';
@@ -63,6 +64,7 @@ const Form = () => {
       withCredentials: true,
     };
     requestBackend(config).then(() => {
+      toast.info('Produto cadastrado com sucesso');
       history.push('/admin/products');
     });
   };
