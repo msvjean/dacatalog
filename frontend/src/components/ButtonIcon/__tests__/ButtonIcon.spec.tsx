@@ -10,7 +10,7 @@ describe('ButtonIcon tests', () => {
             <ButtonIcon text={text} />
         );
         expect(screen.getByText(text)).toBeInTheDocument();
-
+        expect(screen.getByTestId("arrow")).toBeInTheDocument();
     });
 
 });
