@@ -3,14 +3,14 @@ import ButtonIcon from '..';
 
 describe('ButtonIcon tests', () => {
 
-test('ButtonIcon should render button with given text', () => {
+    test('ButtonIcon should render button with given text', () => {
 
-const text = "Fazer login";
-render(
-    <ButtonIcon text={text} />
-);
-expect(screen.getByText(text)).toBeInTheDocument();
+        const text = "Fazer login";
+        render(
+            <ButtonIcon text={text} />
+        );
+        expect(screen.getByText(text)).toBeInTheDocument();
 
-});
+    });
 
 });
