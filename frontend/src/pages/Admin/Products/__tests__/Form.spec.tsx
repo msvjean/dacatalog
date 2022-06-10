@@ -77,4 +77,39 @@ describe('Product form create tests', () => {
         
     });
 
+    test('should clear validation massages when filling out the form correctly', async () => {
+        
+        render(
+            <Router history={history}>
+                <Form />
+            </Router>
+        );
+        
+        const submitButton = screen.getByRole('button', { name: /salvar/i });
+        
+        userEvent.click(submitButton);
+
+        await waitFor(() => {
+            const messages = screen.getAllByText('Campo obrigatório');
+            expect(messages).toHaveLength(5);
+        });
+
+        const nameInput = screen.getByTestId("name");
+        const priceInput = screen.getByTestId("price");
+        const imgUrlInput = screen.getByTestId("imgUrl");
+        const descriptionInput = screen.getByTestId("description");
+        const categoriesInput = screen.getByLabelText("Categorias");
+
+        waitFor(() => selectEvent.select(categoriesInput, ['Computadores', 'Eletrônicos']));
+        userEvent.type(nameInput, "Mouse");
+        userEvent.type(priceInput, "100.51");
+        userEvent.type(imgUrlInput, "https://i.pinimg.com/originals/e4/34/2a/e4342a4e0e968344b75cf50cf1936c09.jpg");
+        userEvent.type(descriptionInput, "Mouse ultra rapido");
+        
+        await waitFor(() => {
+            const messages = screen.queryAllByText('Campo obrigatório');
+            expect(messages).toHaveLength(0);
+        });
+    });
+
 });
