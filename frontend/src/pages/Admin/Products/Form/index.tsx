@@ -91,12 +91,14 @@ const Form = () => {
                   }`}
                   placeholder="Nome do produto"
                   name="name"
+                  data-testid="name"
                 />
                 <div className="invalid-feedback d-block">
                   {errors.name?.message}
                 </div>
               </div>
               <div className="margin-botton-30">
+                <label htmlFor="categories" className="d-none">Categorias</label>
                 <Controller
                   name="categories"
                   rules={{ required: true }}
@@ -110,6 +112,7 @@ const Form = () => {
                       placeholder="Categorias"
                       getOptionLabel={(category) => category.name}
                       getOptionValue={(category) => String(category.id)}
+                      inputId="categories"
                     />
                   )}
                 />
@@ -135,6 +138,7 @@ const Form = () => {
                       value={field.value}
                       onValueChange={field.onChange}
                       prefix="R$ "
+                      data-testid="price"
                     />
                   )}
                 />
@@ -157,6 +161,7 @@ const Form = () => {
                   }`}
                   placeholder="URL da imagem do produto"
                   name="imgUrl"
+                  data-testid="imgUrl"
                 />
                 <div className="invalid-feedback d-block">
                   {errors.imgUrl?.message}
@@ -175,6 +180,7 @@ const Form = () => {
                   }`}
                   placeholder="Descriçao do produto"
                   name="description"
+                  data-testid="description"
                 />
                 <div className="invalid-feedback d-block">
                   {errors.description?.message}
